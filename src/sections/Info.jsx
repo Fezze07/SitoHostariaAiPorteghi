@@ -44,7 +44,11 @@ export default function Info() {
                   </div>
                 ))}
                 {infoData.specialNote && (
-                  <div className="info__special-note">
+                  <div className="info__special-note animate-fade-up">
+                    <div className="info__special-note-header">
+                      <span className="info__special-note-pulse"></span>
+                      <span className="info__special-note-badge">Apertura Speciale</span>
+                    </div>
                     <p>{infoData.specialNote}</p>
                   </div>
                 )}
@@ -66,12 +70,13 @@ export default function Info() {
                 rel="noopener noreferrer"
                 className="info__map-link"
                 aria-label={infoData.blocks.location.mapAriaLabel}
+                style={{ display: 'inline-block', marginBottom: '1rem' }}
               >
                 {infoData.blocks.location.mapLinkText}
               </a>
-              <div style={{ marginTop: '1rem', fontStyle: 'italic', fontSize: '0.9rem', color: 'var(--color-on-surface-variant)', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+              <div style={{ fontStyle: 'italic', fontSize: '0.9rem', color: 'var(--color-on-surface-variant)', display: 'flex', alignItems: 'center', gap: '8px', borderTop: '1px solid rgba(0,0,0,0.05)', paddingTop: '1rem' }}>
                 <MailIcon size={16} />
-                <p>{CONTACT_EMAIL}</p>
+                <p style={{ margin: 0 }}>{CONTACT_EMAIL}</p>
               </div>
             </div>
 

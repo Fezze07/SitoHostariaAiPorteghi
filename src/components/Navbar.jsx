@@ -4,7 +4,8 @@ import './Navbar.css'
 
 import { WHATSAPP_URL, PHONE_LINK } from '../constants'
 import globalData from '../data/global.json'
-import { PhoneIcon, MessageIcon } from './Icons'
+import specialMenuData from '../data/specialEventMenu.json'
+import { PhoneIcon, MessageIcon, ArrowDownIcon, ArrowRightIcon } from './Icons'
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
@@ -38,6 +39,16 @@ export default function Navbar() {
             ))}
           </ul>
 
+          {specialMenuData && specialMenuData.active && (
+            <a href="#menu-speciale" className="navbar__special-badge">
+              <span className="navbar__special-badge-dot" />
+              <span className="navbar__special-badge-text">
+                {specialMenuData.heroCTA}
+              </span>
+              <ArrowDownIcon size={16} className="navbar__special-badge-icon" />
+            </a>
+          )}
+
           <a href={PHONE_LINK}
             className="btn-primary navbar__cta" aria-label={globalData.labels.callBtnFull}
             style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
@@ -64,6 +75,14 @@ export default function Navbar() {
             {link.label}
           </a>
         ))}
+
+        {specialMenuData && specialMenuData.active && (
+          <a href="#menu-speciale" className="navbar__drawer-link navbar__drawer-link--special" onClick={closeDrawer}>
+            <span className="navbar__special-badge-dot" />
+            {specialMenuData.heroCTA}
+            <ArrowDownIcon size={18} />
+          </a>
+        )}
         <div className="navbar__drawer-actions">
           <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer"
             className="btn-primary" onClick={closeDrawer}

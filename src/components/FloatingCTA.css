@@ -59,6 +59,13 @@
   border: 1.5px solid rgba(218, 193, 191, 0.5);
 }
 
+.floating-cta__btn--special {
+  flex: 0 0 60px; /* Bottone più compatto per l'icona */
+  background: transparent;
+  color: var(--color-primary);
+  border: 1.5px solid var(--color-primary);
+}
+
 .floating-cta__icon {
   font-size: 1rem;
   line-height: 1;

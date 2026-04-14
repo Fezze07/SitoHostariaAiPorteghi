@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react'
 import './Hero.css'
 
 import { WHATSAPP_URL, PHONE_LINK } from '../constants'
-import { PhoneIcon, MessageIcon } from '../components/Icons'
+import { PhoneIcon, MessageIcon, ArrowDownIcon } from '../components/Icons'
 import heroData from '../data/hero.json'
 import globalData from '../data/global.json'
 
@@ -31,7 +31,7 @@ export default function Hero() {
     window.addEventListener('scroll', handleScroll, { passive: true })
     // Inizia con un trigger per settare la posizione iniziale se ricarichi la pagina a metà scroll
     handleScroll()
-    
+
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
   return (

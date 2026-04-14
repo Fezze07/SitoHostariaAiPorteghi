@@ -1,7 +1,8 @@
 // Menu.jsx —   Carosello infinito basato su CSS transform (nessuno scroll nativo)
-import { useRef, useState, useEffect, useCallback } from 'react'
+import { useRef, useState, useEffect, useCallback, useMemo } from 'react'
 import MenuItem from '../components/MenuItem'
 import menuData from '../data/menu.json'
+import specialMenuData from '../data/specialEventMenu.json'
 import { ChevronLeftIcon, ChevronRightIcon } from '../components/Icons'
 import './Menu.css'
 
@@ -16,19 +17,34 @@ export default function Menu() {
   const lockRef = useRef(false)
   const touchStartX = useRef(0)
 
+  // Costruisce l'array delle categorie dinamicamente
+  const categoriesToRender = useMemo(() => {
+    const list = []
+    if (specialMenuData && specialMenuData.active) {
+      list.push({
+        category: specialMenuData.eventName,
+        isSpecial: true,
+        description: specialMenuData.description,
+        fixedPrice: specialMenuData.fixedPrice,
+        items: specialMenuData.items
+      })
+    }
+    list.push(...menuData.categories)
+    return list
+  }, [specialMenuData, menuData])
+
   // Array esteso: [clone-ultimo, ...categorie reali, clone-primo]
-  // Permette il loop infinito senza salti visibili
-  const extendedMenu = [
-    menuData.categories[menuData.categories.length - 1],
-    ...menuData.categories,
-    menuData.categories[0],
-  ]
+  const extendedMenu = useMemo(() => [
+    categoriesToRender[categoriesToRender.length - 1],
+    ...categoriesToRender,
+    categoriesToRender[0],
+  ], [categoriesToRender])
 
   // L'indice parte da 1 perché lo slot 0 è il clone dell'ultimo elemento
   const [currentIdx, setCurrentIdx] = useState(1)
 
-  const getTranslate = (idx) =>
-    `translateX(calc(${PEEK_PCT - idx * SLIDE_PCT}%))`
+  const getTranslate = useCallback((idx) =>
+    `translateX(calc(${PEEK_PCT - idx * SLIDE_PCT}%))`, [])
 
   // Salta istantaneamente all'indice reale corrispondente dopo aver raggiunto un clone,
   // disabilitando la transizione per evitare il jitter visivo
@@ -38,15 +54,17 @@ export default function Menu() {
 
     track.style.transition = 'none'
     track.style.transform = getTranslate(targetIdx)
-    void track.getBoundingClientRect() // forza reflow per applicare il cambio prima di riattivare la transizione
+    // Forza reflow
+    void track.offsetHeight 
+    
     setCurrentIdx(targetIdx)
+    
+    // Riabilita la transizione nel frame successivo
     requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        if (trackRef.current) trackRef.current.style.transition = ''
-        lockRef.current = false
-      })
+      if (trackRef.current) trackRef.current.style.transition = ''
+      lockRef.current = false
     })
-  }, [])
+  }, [getTranslate])
 
   const handleTransitionEnd = useCallback((e) => {
     if (e.target !== trackRef.current || e.propertyName !== 'transform') return
@@ -66,17 +84,40 @@ export default function Menu() {
     setCurrentIdx(prev => prev + (direction === 'next' ? 1 : -1))
   }, [])
 
-  // Auto-avanzamento ogni 10 s. 
-  // Dipende da currentIdx: ogni navigazione (manuale o auto) resetta il timer.
+  // Auto-avanzamento ogni 15 s.
   useEffect(() => {
-    timerRef.current = setInterval(() => navigate('next'), 10000)
+    timerRef.current = setInterval(() => navigate('next'), 15000)
     return () => clearInterval(timerRef.current)
   }, [currentIdx, navigate])
+
+  // Listener per l'ancora esterna
+  useEffect(() => {
+    const handleHashChange = () => {
+      if (window.location.hash === '#menu-speciale') {
+        const specialIdx = categoriesToRender.findIndex(cat => cat.isSpecial)
+        if (specialIdx !== -1) {
+          // Usiamo un timeout per assicurarci che la transizione allo scroll (nativa) 
+          // non interferisca con il jump del carosello
+          setTimeout(() => {
+            silentJump(specialIdx + 1)
+            // Puliamo l'hash così che il timer non ci riporti qui
+            window.history.replaceState(null, null, '#menu')
+          }, 100)
+        }
+      }
+    }
+    
+    window.addEventListener('hashchange', handleHashChange)
+    // Eseguiamo anche all'avvio se l'hash è già presente
+    if (window.location.hash === '#menu-speciale') handleHashChange()
+    
+    return () => window.removeEventListener('hashchange', handleHashChange)
+  }, [silentJump, categoriesToRender])
 
   // Normalizza l'indice per trattare cloni e slide reali come equivalenti
   const isSlideActive = (idx) => {
     const norm = (i) => {
-      if (i === 0) return menuData.categories.length - 1
+      if (i === 0) return categoriesToRender.length - 1
       if (i === extendedMenu.length - 1) return 0
       return i - 1
     }
@@ -127,9 +168,14 @@ export default function Menu() {
               {extendedMenu.map((cat, idx) => (
                 <div
                   key={`${cat.category}-${idx}`}
-                  className={`menu-carousel__slide ${isSlideActive(idx) ? 'menu-carousel__slide--active' : ''}`}
+                  id={cat.isSpecial && isSlideActive(idx) ? 'menu-speciale' : undefined}
+                  className={`menu-carousel__slide ${isSlideActive(idx) ? 'menu-carousel__slide--active' : ''} ${cat.isSpecial ? 'menu-carousel__slide--special' : ''}`}
                 >
                   <h3 className="menu-carousel__category-title">{cat.category}</h3>
+                  {cat.isSpecial && (
+                    <p className="menu-carousel__special-desc">{cat.description}</p>
+                  )}
+                  
                   <div className="menu-section__list">
                     {cat.items.map(item => (
                       <MenuItem
@@ -140,6 +186,13 @@ export default function Menu() {
                       />
                     ))}
                   </div>
+
+                  {cat.isSpecial && cat.fixedPrice && (
+                    <div className="menu-carousel__fixed-price">
+                       <span className="price-label">Tutto compreso a</span>
+                       <span className="price-value">{cat.fixedPrice}</span>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>

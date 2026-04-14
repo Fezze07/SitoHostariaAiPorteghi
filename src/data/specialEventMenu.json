@@ -1,0 +1,24 @@
+{
+  "active": true,
+  "heroCTA": "Nuovo menù speciale ",
+  "eventName": "Venerdì 24 Aprile - Sera",
+  "fixedPrice": "35 euro",
+  "description": "Menu degustazione a prezzo fisso",
+  "items": [
+    {
+      "name": "Antipasto",
+      "description": "Uovo all'occhio di bue con asparagi, crudo di Parma e salsa olandese",
+      "price": ""
+    },
+    {
+      "name": "Primo",
+      "description": "Risotto asparagi e capesante 3 consistenze (crema, bollito e fritto)",
+      "price": ""
+    },
+    {
+      "name": "Bevande incluse",
+      "description": "Bibite, acqua e caffè compresi nel prezzo",
+      "price": ""
+    }
+  ]
+}
