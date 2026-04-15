@@ -26,6 +26,7 @@ export default function Menu() {
         isSpecial: true,
         description: specialMenuData.description,
         fixedPrice: specialMenuData.fixedPrice,
+        showPrice: specialMenuData.showPrice,
         items: specialMenuData.items
       })
     }
@@ -182,12 +183,12 @@ export default function Menu() {
                         key={item.name}
                         name={item.name}
                         description={item.description}
-                        price={item.price}
+                        price={(cat.isSpecial && cat.showPrice === false) ? null : item.price}
                       />
                     ))}
                   </div>
 
-                  {cat.isSpecial && cat.fixedPrice && (
+                  {cat.isSpecial && cat.fixedPrice && cat.showPrice !== false && (
                     <div className="menu-carousel__fixed-price">
                        <span className="price-label">Tutto compreso a</span>
                        <span className="price-value">{cat.fixedPrice}</span>

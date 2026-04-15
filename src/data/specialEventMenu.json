@@ -3,6 +3,7 @@
   "heroCTA": "Nuovo menù speciale ",
   "eventName": "Venerdì 24 Aprile - Sera",
   "fixedPrice": "35 euro",
+  "showPrice": false,
   "description": "Menu degustazione a prezzo fisso",
   "items": [
     {

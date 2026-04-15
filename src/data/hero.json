@@ -11,7 +11,8 @@
   "scrollText": "Scopri",
   "menuHighlight": {
     "text": "Cene aziendali, battesimi e occasioni speciali",
-    "price": "35/40 euro"
+    "price": "35/40 euro",
+    "showPrice": false
   },
   "aria": {
     "section": "Benvenuto in Hostaria ai Porteghi",

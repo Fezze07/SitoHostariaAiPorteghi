@@ -9,7 +9,7 @@ export default function MenuItem({ name, description, price }) {
         {/* Nome piatto (Manrope bold) */}
         <span className="menu-item__name">{name}</span>
         {/* Prezzo (Noto Serif — enfasi premium) */}
-        <span className="menu-item__price">€ {price}</span>
+        {price && <span className="menu-item__price">€ {price}</span>}
       </div>
       {/* Descrizione ingredienti */}
       {description && (

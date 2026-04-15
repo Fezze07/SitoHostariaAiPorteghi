@@ -62,7 +62,9 @@ export default function Hero() {
         {heroData.menuHighlight && (
           <div className="hero__highlight">
             <span className="hero__highlight-text">{heroData.menuHighlight.text}</span>
-            <span className="hero__highlight-price">{heroData.menuHighlight.price}</span>
+            {heroData.menuHighlight.showPrice !== false && (
+              <span className="hero__highlight-price">{heroData.menuHighlight.price}</span>
+            )}
           </div>
         )}
 
