@@ -3,6 +3,27 @@
     "expiryDate": "",
     "hasExpiry": false,
     "heroCTA": "Nuovo menù speciale ",
+    "eventName": "Pizza Hour - 22:00 / 23:00 ",
+    "fixedPrice": "15 euro",
+    "showPrice": true,
+    "description": "Una squisita pizza notturna accompagnata da birra e caffè",
+    "items": [
+      {
+        "name": "Pizza",
+        "description": "A scelta fra il nostro menu ",
+        "price": ""
+      },
+      {
+        "name": "Birra da Mezzo Litro e Caffè",
+        "description": "Compreso nel prezzo di 15 euro",
+        "price": ""
+      }
+    ]
+  },
+  {
+    "expiryDate": "",
+    "hasExpiry": false,
+    "heroCTA": "Nuovo menù speciale ",
     "eventName": "Cene / Pranzi Aziendali - Carne",
     "fixedPrice": "45 euro",
     "showPrice": true,
