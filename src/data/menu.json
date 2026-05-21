@@ -160,6 +160,21 @@
           "name": "Ai Porteghi",
           "description": "Pomodoro, mozzarella, frutti di mare",
           "price": "--"
+        },
+        {
+          "name": "Mortazza",
+          "description": "Pomodoro, mozzarella, mortadella, pistacchio",
+          "price": "--"
+        },
+        {
+          "name": "Speck e Brie",
+          "description": "Bianca, speck, brie",
+          "price": "--"
+        },
+        {
+          "name": "Bresaola, Rucola e Grana",
+          "description": "Bianca, bresaola, rucola, scaglie di grana",
+          "price": "--"
         }
       ]
     }
