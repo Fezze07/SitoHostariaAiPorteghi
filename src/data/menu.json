@@ -163,17 +163,17 @@
         },
         {
           "name": "Mortazza",
-          "description": "Pomodoro, mozzarella, mortadella, pistacchio",
+          "description": "Bianca, mortazza, burrata pugliese, mortadella, crema di pistacchio e pistacchio di bronte",
           "price": "--"
         },
         {
           "name": "Speck e Brie",
-          "description": "Bianca, speck, brie",
+          "description": "Pomodoro, mozzarella, speck, brie",
           "price": "--"
         },
         {
           "name": "Bresaola, Rucola e Grana",
-          "description": "Bianca, bresaola, rucola, scaglie di grana",
+          "description": "Pomodoro, mozzarella, bresaola, rucola, scaglie di grana",
           "price": "--"
         }
       ]
